@@ -2,6 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -13,17 +14,23 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          const cookies = request.cookies as Record<string, string> | undefined;
+          return cookies?.jwt ?? null;
+        },
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
       secretOrKey: secret,
     });
   }
 
-  public validate(payload: { sub: string; email: string }) {
+  public validate(payload: { id: string; email: string }) {
     if (!payload) throw new UnauthorizedException('Access not auhtorized');
 
     return {
-      userId: payload.sub,
+      userId: payload.id,
       email: payload.email,
     };
   }

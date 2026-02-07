@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from 'src/users/types/user.type';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -18,7 +22,7 @@ export class AuthService {
     const user: User = await this.usersService.getUser(email);
 
     if (!user) {
-      return null;
+      throw new NotFoundException('User not found');
     }
 
     const isPasswordValid: boolean = await bcrypt.compare(
@@ -27,7 +31,9 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      return null;
+      throw new UnauthorizedException(
+        "This password doesn't match with the password in database",
+      );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,14 +43,14 @@ export class AuthService {
   }
 
   public login(user: Omit<User, 'password'>) {
-    const payload: { id: string; email: string } = {
-      id: user.id,
+    const payload: { sub: string; email: string } = {
+      sub: user.id,
       email: user.email,
     };
 
     return {
       access_token: this.jwtService.sign(payload),
-      user: payload,
+      user: { id: user.id, email: user.email },
     };
   }
 }
