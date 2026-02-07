@@ -3,6 +3,7 @@ import { FeatureDataService } from './feature-data.service';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/guards/auth.guard';
 import { FeatureData } from './types/feature-data.type';
+import { Profile } from 'src/profile/types/profile.type';
 
 @Resolver()
 export class FeatureDataResolver {
@@ -11,8 +12,8 @@ export class FeatureDataResolver {
   @Query(() => [FeatureData], { name: 'featuresForProfile' })
   @UseGuards(GqlAuthGuard)
   public getEnabledFeaturesForUser(
-    @Args('profileId', { type: () => String }) profileId: string,
+    @Args('profileId', { type: () => String }) profile: Profile,
   ) {
-    return this.featureDataService.getEnabledFeaturesForUser(profileId);
+    return this.featureDataService.getEnabledFeaturesForUser(profile);
   }
 }

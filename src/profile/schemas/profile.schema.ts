@@ -11,7 +11,9 @@ export class ProfileEntity {
   userId: string;
 
   @Prop({ type: String, enum: ROLES, default: ROLES.EMPLOYEE })
-  @IsEnum(ROLES, { message: 'role must be one of: employee, manager, admin' })
+  @IsEnum(ROLES, {
+    message: 'role must to be one of: employee, manager, admin',
+  })
   role: ROLES;
 
   @Prop({ required: true })
