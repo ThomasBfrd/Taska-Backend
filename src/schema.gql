@@ -12,6 +12,12 @@ type Profile {
   birthDay: String!
   city: String!
   tel: String!
+  features: [FeatureData!]!
+}
+
+type FeatureData {
+  featureKey: String!
+  data: [String!]!
 }
 
 type FeatureFlag {
@@ -22,13 +28,8 @@ type FeatureFlag {
   enabled: Boolean!
 }
 
-type FeatureData {
-  featureKey: String!
-  data: [String!]!
-}
-
 type Query {
   getProfile(userId: String!): Profile
-  features: [FeatureFlag!]!
   featuresForProfile(profileId: String!): [FeatureData!]!
+  features: [FeatureFlag!]!
 }

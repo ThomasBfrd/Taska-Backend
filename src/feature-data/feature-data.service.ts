@@ -9,7 +9,6 @@ import {
   FeatureData,
   ProfileFeatureDataService,
 } from 'src/profile-feature-data/profile-feature-data.service';
-import { ProfileService } from 'src/profile/profile.service';
 import { Profile } from 'src/profile/types/profile.type';
 
 @Injectable()
@@ -17,22 +16,19 @@ export class FeatureDataService {
   public constructor(
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
-    private readonly profileService: ProfileService,
     private readonly featuresFlagService: FeatureFlagService,
     private readonly featureAccessService: FeatureAccessService,
     private readonly profileFeatureDataService: ProfileFeatureDataService,
   ) {}
 
   public async getEnabledFeaturesForUser(
-    userId: string,
+    profile: Profile,
   ): Promise<Array<FeatureData>> {
-    const cacheKey: string = `features:${userId}`;
+    const cacheKey: string = `features:${profile.id}`;
     const cached: Array<FeatureData> | undefined =
       await this.cacheManager.get<Array<FeatureData>>(cacheKey);
 
     if (cached) return cached;
-
-    const profile: Profile = await this.profileService.getProfileById(userId);
 
     const enabledFeatures: Array<FeatureFlag> =
       await this.featuresFlagService.getEnabledFeatures();

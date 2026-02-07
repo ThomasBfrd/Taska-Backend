@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import type { Response as ExpressResponse } from 'express';
+import type { Response } from 'express';
 import { User } from 'src/users/types/user.type';
 
 @Controller('auth')
@@ -22,7 +22,7 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   public signIn(
     @Request() req: { user: Omit<User, 'password'> },
-    @Res() res: ExpressResponse,
+    @Res({ passthrough: true }) res: Response,
   ) {
     const result = this.authService.login(req.user);
 
@@ -33,8 +33,6 @@ export class AuthController {
       maxAge: 3600000,
     });
 
-    return res.json({
-      user: result?.user,
-    });
+    return result.user;
   }
 }
