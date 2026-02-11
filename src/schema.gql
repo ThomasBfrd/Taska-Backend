@@ -18,6 +18,7 @@ type Profile {
 type FeatureData {
   featureKey: String!
   data: [String!]!
+  genericData: Boolean
 }
 
 type FeatureFlag {
