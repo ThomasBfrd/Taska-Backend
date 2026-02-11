@@ -9,9 +9,9 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'http://localhost:4200',
-      'https://taska.vercel.app',
-      'https://api-taska.up.railway.app',
+      process.env.LOCAL_CLIENT,
+      process.env.CLIENT_PATH,
+      process.env.BACK_PATH,
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
