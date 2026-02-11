@@ -30,7 +30,7 @@ export class ProfileFeatureDataService {
       }),
       this.profileModel.find({
         featureId: { $in: featuresId },
-        profileId: null,
+        profileId: '',
       }),
     ]);
 
@@ -44,7 +44,8 @@ export class ProfileFeatureDataService {
 
       return {
         featureKey: feature.key,
-        data: perso?.data || generic?.data || [],
+        data: perso?.data || [],
+        genericData: generic !== undefined,
       };
     });
   }

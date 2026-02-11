@@ -7,4 +7,7 @@ export class FeatureData {
 
   @Field(() => [String])
   data: Array<string>;
+
+  @Field({ nullable: true })
+  genericData?: boolean;
 }
