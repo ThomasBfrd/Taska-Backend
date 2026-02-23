@@ -19,7 +19,9 @@ async function bootstrap() {
       'Content-Type',
       'Authorization',
       'Apollo-Require-Preflight',
+      'Cookie',
     ],
+    exposedHeaders: ['Set-Cookie'],
   });
 
   await app.listen(process.env.PORT ?? 3000);
