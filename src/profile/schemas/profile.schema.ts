@@ -30,6 +30,12 @@ export class ProfileEntity {
 
   @Prop({ required: true })
   tel: string;
+
+  @Prop({
+    default:
+      'https://res.cloudinary.com/de7kgkvgt/image/upload/taska-imgProfile.png',
+  })
+  profileImg: string;
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(ProfileEntity);
