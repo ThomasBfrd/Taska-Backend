@@ -35,6 +35,7 @@ import { FeatureDataModule } from './feature-data/feature-data.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('BDD_PATH'),
+        dbName: configService.get<string>('BDD_NAME'),
       }),
       inject: [ConfigService],
     }),
