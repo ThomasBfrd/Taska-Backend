@@ -12,6 +12,7 @@ type Profile {
   birthDay: String!
   city: String!
   tel: String!
+  profileImg: String!
   features: [FeatureData!]!
 }
 

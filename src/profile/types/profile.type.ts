@@ -26,4 +26,7 @@ export class Profile {
 
   @Field()
   tel: string;
+
+  @Field()
+  profileImg: string;
 }
