@@ -3,7 +3,7 @@ require('dotenv').config();
 const config = {
   mongodb: {
     url: `${process.env.BDD_PATH}`,
-    databaseName: "profile"
+    databaseName: `${process.env.BDD_NAME}`
   },
 
   // The migrations dir, can be an relative or absolute path. Only edit this when really necessary.
