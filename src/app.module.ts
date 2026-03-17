@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ProfileFeatureDataModule } from './profile-feature-data/profile-feature-data.module';
 import { FeatureDataModule } from './feature-data/feature-data.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { FeatureDataModule } from './feature-data/feature-data.module';
     AuthModule,
     ProfileFeatureDataModule,
     FeatureDataModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
